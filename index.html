@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>三平方の定理：時空を超える絶対真理 - 究極のアーカイブ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'media', // デバイスのテーマ設定に自動追従
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Inter"', '"Noto Sans JP"', 'sans-serif'],
+                        serif: ['"Noto Serif JP"', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- KaTeX CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <!-- KaTeX JS -->
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap');
+        
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            scroll-behavior: smooth;
+            line-height: 2.4; /* 行間を広げて読みやすく */
+            transition: background-color 0.3s, color 0.3s;
+            overflow-x: hidden;
+        }
+
+        .serif-text {
+            font-family: 'Noto Serif JP', serif;
+        }
+
+        /* Slide-out Panel Styles */
+        .quiz-panel {
+            transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            transform: translateX(100%);
+            box-shadow: -10px 0 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .quiz-panel.active {
+            transform: translateX(0);
+        }
+
+        .glass-morphism {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            .glass-morphism {
+                background: rgba(15, 23, 42, 0.85);
+                border-bottom: 1px solid rgba(51, 65, 85, 0.6);
+            }
+        }
+
+        .content-card {
+            border-radius: 1.5rem;
+            padding: 4rem;
+            margin-bottom: 5rem;
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.06);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .content-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.08);
+        }
+
+        .equation-box {
+            border-left: 6px solid #4f46e5;
+            background: linear-gradient(90deg, rgba(79, 70, 229, 0.05) 0%, transparent 100%);
+            padding: 3rem;
+            margin: 4rem 0;
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-align: center;
+            border-radius: 0 1rem 1rem 0;
+            font-family: 'Noto Serif JP', serif;
+            letter-spacing: 0.05em;
+        }
+
+        .chapter-title {
+            position: relative;
+            padding-bottom: 1.5rem;
+            margin-bottom: 3.5rem;
+            font-size: 2.25rem;
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            line-height: 1.3;
+            border-bottom: 1px solid #cbd5e1;
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            .chapter-title {
+                border-bottom: 1px solid #334155;
+            }
+        }
+
+        .chapter-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -1px;
+            width: 80px;
+            height: 4px;
+            background: #4f46e5;
+            border-radius: 2px;
+        }
+
+        .sub-section-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-top: 4.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            color: #312e81;
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            .sub-section-title {
+                color: #e0e7ff;
+            }
+        }
+
+        .sub-section-title::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 28px;
+            background: #6366f1;
+            margin-right: 16px;
+            border-radius: 99px;
+        }
+
+        p { margin-bottom: 2.5rem; font-size: 1.125rem; text-align: justify; letter-spacing: 0.04em; color: #334155; }
+        
+        @media (prefers-color-scheme: dark) {
+            p { color: #94a3b8; }
+        }
+
+        .diagram-box {
+            border-radius: 2rem;
+            padding: 4rem;
+            margin: 5rem 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.02);
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            .diagram-box {
+                background-color: #0f172a;
+                border: 1px solid #1e293b;
+            }
+        }
+
+        .highlight-text {
+            background: linear-gradient(180deg, transparent 65%, #c7d2fe 65%);
+            font-weight: 700;
+            padding: 0 4px;
+            color: #1e1b4b;
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            .highlight-text {
+                background: linear-gradient(180deg, transparent 65%, #312e81 65%);
+                color: #e0e7ff;
+            }
+        }
+
+        /* Trivia Box Styling */
+        .trivia-box {
+            border-radius: 1.25rem;
+            padding: 2.5rem 3rem;
+            margin: 4rem 0;
+            position: relative;
+            background-color: #fffbeb;
+            border: 1px solid #fcd34d;
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            .trivia-box {
+                background-color: rgba(120, 53, 15, 0.1);
+                border: 1px solid rgba(180, 83, 9, 0.4);
+            }
+        }
+
+        .trivia-badge {
+            position: absolute;
+            top: -16px;
+            left: 32px;
+            background: linear-gradient(135deg, #d97706, #b45309);
+            color: white;
+            padding: 6px 20px;
+            border-radius: 9999px;
+            font-weight: 800;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            letter-spacing: 0.05em;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Quiz UI */
+        .quiz-input {
+            transition: all 0.2s ease;
+        }
+        .quiz-input:focus {
+            outline: none;
+            border-color: #6366f1;
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+        }
+        .correct-answer {
+            background-color: #f0fdf4 !important;
+            border-color: #22c55e !important;
+            color: #15803d !important;
+            box-shadow: 0 0 0 1px #22c55e;
+        }
+        .incorrect-answer {
+            background-color: #fef2f2 !important;
+            border-color: #ef4444 !important;
+            color: #b91c1c !important;
+            box-shadow: 0 0 0 1px #ef4444;
+        }
+        
+        .feedback-box {
+            display: none;
+            margin-top: 1.5rem;
+            padding: 2rem;
+            border-radius: 1rem;
+            font-size: 1rem;
+            animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* KaTeX SVG fix */
+        foreignObject { overflow: visible; }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, #4f46e5 0%, #0ea5e9 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 selection:bg-indigo-200 dark:selection:bg-indigo-900">
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-40 glass-morphism">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <!-- Bootstrap Icon: triangle-fill (Stylized logo) -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="text-indigo-600 dark:text-indigo-400" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M7.022 1.566a1.13 1.13 0 0 1 1.96 0l6.857 11.667c.457.778-.092 1.767-.98 1.767H1.144c-.889 0-1.437-.99-.98-1.767L7.022 1.566z"/>
+                </svg>
+                <span class="font-bold text-lg tracking-tight hidden sm:block">Archive: Pythagoras</span>
+            </div>
+            <button id="quizTrigger" class="group bg-slate-900 text-white dark:bg-indigo-600 dark:text-white px-6 py-3 rounded-full font-bold shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 flex items-center gap-3 text-sm md:text-base border border-transparent hover:border-indigo-400">
+                <!-- Bootstrap Icon: pencil-square -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="transition-transform group-hover:rotate-12" viewBox="0 0 16 16">
+                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                </svg>
+                <span>無限演習ジェネレーター</span>
+            </button>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto px-6 py-24">
+        
+        <!-- Hero Section -->
+        <header class="text-center mb-32">
+            <div class="inline-block px-4 py-1.5 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:border-indigo-800 dark:text-indigo-300 text-xs font-bold uppercase tracking-widest mb-6">
+                The Eternal Equation
+            </div>
+            <h1 class="text-5xl md:text-8xl font-black mb-10 tracking-tight leading-tight">
+                <span class="hero-gradient">三平方の定理</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-slate-600 dark:text-slate-400 serif-text max-w-3xl mx-auto leading-loose">
+                直角三角形が描く、面積の保存と宇宙の調和。<br>
+                2500年の時を超え、人類の知性を支え続ける数学の至宝。<br>
+                その証明、歴史、そして現代社会における驚くべき応用を徹底的に紐解く。
+            </p>
+        </header>
+
+        <!-- Chapter 1: Essence -->
+        <section class="content-card bg-white border border-slate-100 dark:bg-slate-900 dark:border-slate-800">
+            <h2 class="chapter-title text-slate-900 dark:text-slate-100">第1章：定理の本質と「面積の保存」</h2>
+            <div class="serif-text">
+                <p>
+                    <strong>三平方の定理（Pythagorean Theorem）</strong>、欧米においてピタゴラスの定理として知られるこの命題は、ユークリッド幾何学において最も有名かつ、文明の発展に不可欠であった定理の一つである。数式として表現される $a^2 + b^2 = c^2$ は、中学生であれば誰もが暗記する公式だが、その真の美しさは単なる代数計算の便利さにあるのではない。その本質は、幾何学的な<span class="highlight-text">「面積の保存則」</span>にある。
+                </p>
+
+                <p>
+                    なぜ「長さ」を求める公式に「二乗」が登場するのだろうか？ 多くの学生が抱くこの疑問への答えは、古代ギリシャ人たちがこの定理をどう見ていたかを知ることで氷解する。彼らにとって、数とは「形」であった。$a^2$ とは、$a$ を二回掛ける計算ではなく、一辺が $a$ の<span class="highlight-text">「正方形そのもの」</span>を意味していたのである。
+                </p>
+
+                <div class="diagram-box">
+                    <h4 class="text-lg font-bold mb-8 text-slate-700 dark:text-slate-300 tracking-wider">ユークリッドの風車（The Windmill）</h4>
+                    <!-- Custom SVG mimicking the Wikipedia style "Windmill" diagram -->
+                    <svg width="450" height="450" viewBox="0 0 400 400" class="overflow-visible">
+                        <!-- Square a (Bottom, Blue) -->
+                        <rect x="80" y="200" width="120" height="120" class="fill-blue-50 stroke-blue-500 dark:fill-blue-900/20 dark:stroke-blue-400" stroke-width="2.5"/>
+                        <foreignObject x="120" y="240" width="40" height="40">
+                            <div xmlns="http://www.w3.org/1999/xhtml" class="w-full h-full flex items-center justify-center text-3xl text-blue-800 dark:text-blue-300 font-serif">$a^2$</div>
+                        </foreignObject>
+
+                        <!-- Square b (Right, Red) -->
+                        <rect x="200" y="110" width="90" height="90" class="fill-rose-50 stroke-rose-500 dark:fill-rose-900/20 dark:stroke-rose-400" stroke-width="2.5"/>
+                        <foreignObject x="225" y="135" width="40" height="40">
+                            <div xmlns="http://www.w3.org/1999/xhtml" class="w-full h-full flex items-center justify-center text-3xl text-rose-800 dark:text-rose-300 font-serif">$b^2$</div>
+                        </foreignObject>
+
+                        <!-- Square c (Hypotenuse, Purple) -->
+                        <polygon points="80,200 200,110 110,-10 -10,80" class="fill-violet-50 stroke-violet-500 dark:fill-violet-900/20 dark:stroke-violet-400" stroke-width="2.5"/>
+                        <foreignObject x="80" y="80" width="40" height="40" transform="rotate(-36.87 100 100)">
+                            <div xmlns="http://www.w3.org/1999/xhtml" class="w-full h-full flex items-center justify-center text-3xl text-violet-800 dark:text-violet-300 font-serif">$c^2$</div>
+                        </foreignObject>
+
+                        <!-- Right Triangle (Center) -->
+                        <polygon points="80,200 200,200 200,110" class="fill-slate-700 dark:fill-slate-300" stroke="none"/>
+                        
+                        <!-- Right Angle Mark -->
+                        <polyline points="190,200 190,190 200,190" fill="none" class="stroke-white dark:stroke-slate-900" stroke-width="2"/>
+                    </svg>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 mt-8 italic text-center max-w-lg">
+                        直角を挟む二辺 $a, b$ 上の正方形（青と赤）の面積の合計は、<br>斜辺 $c$ 上の正方形（紫）の面積と完全に一致する。
+                    </p>
+                </div>
+
+                <div class="equation-box text-slate-900 dark:text-slate-100 shadow-sm">
+                    $$ a^2 + b^2 = c^2 $$
+                </div>
+
+                <h3 class="sub-section-title">物理的な解釈：パズルのピース</h3>
+                <p>
+                    上の図の中央にあるグレーの直角三角形に注目してほしい。この定理が主張しているのは、極めて物理的で触覚的な事実である。「二つの小さな正方形（青と赤の領域）をハサミで裁断してパズルのように組み合わせると、斜辺上の最も大きな正方形（紫の領域）を、一分の隙間もなく、かつ一片の余りもなく完全に埋め尽くすことができる」ということだ。
+                </p>
+                <p>
+                    これは、液体を注ぎ替えることに例えることもできる。もし、青と赤の正方形が水槽で、深さが同じだと仮定しよう。その二つの水槽に入った水をすべて、紫の正方形の水槽に移し替えると、水面はまったく同じ高さになる。三平方の定理とは、宇宙における「量の保存」の一つの現れなのである。
+                </p>
+
+                <!-- Trivia 1 -->
+                <div class="trivia-box">
+                    <span class="trivia-badge">
+                        豆知識：名前の由来と「勾股弦」
+                    </span>
+                    <p class="mb-0 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                        日本では「三平方の定理」と呼ばれるが、英語圏では「Pythagorean theorem（ピタゴラスの定理）」である。一方、中国などの漢字文化圏では古くから<strong>「勾股弦（こうこげん）の定理」</strong>と呼ばれてきた。直角三角形の短辺を「勾（かぎ）」、長辺を「股（もも）」、斜辺を「弦（つる）」に見立てた名称である。古代中国の数学書『周髀算経（しゅうひさんけい）』には、紀元前1000年頃にはすでにこの関係が知られていた記述がある。つまり、ピタゴラス一人の功績ではないのだ。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chapter 1.5: Calculation -->
+        <section class="content-card bg-white border border-slate-100 dark:bg-slate-900 dark:border-slate-800">
+            <h2 class="chapter-title text-slate-900 dark:text-slate-100">実践：定理を使った長さの求め方</h2>
+            <div class="serif-text">
+                <p>
+                    このサイトの練習問題を解くために必要な、実践的な計算手順を解説する。公式 $a^2 + b^2 = c^2$ は変形することで、求めたい辺が「斜辺（一番長い辺）」か「それ以外の辺」かによって、2つの明確なアルゴリズムに分けることができる。
+                </p>
+
+                <h3 class="sub-section-title">パターンA：斜辺 $c$ を求める（加算のアプローチ）</h3>
+                <p>
+                    直角を挟む2辺（$a$ と $b$）が分かっていて、斜めの一番長い辺（$c$）を知りたいときは、面積を足し合わせるイメージを持つ。すなわち<strong>「2乗して、足して、ルートをとる」</strong>。
+                </p>
+                <div class="bg-indigo-50 dark:bg-indigo-900/20 p-8 rounded-2xl border border-indigo-100 dark:border-indigo-800 mb-10">
+                    <p class="font-bold text-indigo-900 dark:text-indigo-200 mb-4 flex items-center gap-2">
+                        <span class="bg-indigo-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs">1</span>
+                        計算手順：
+                    </p>
+                    <ol class="list-decimal list-inside space-y-3 text-slate-700 dark:text-slate-300 ml-2">
+                        <li>分かっている2つの辺を、それぞれ2乗する（$a^2$ と $b^2$）。</li>
+                        <li>それらを足し算する（$a^2 + b^2$）。これが斜辺の正方形の面積になる。</li>
+                        <li>その面積の平方根（ルート）をとることで、辺の長さに戻す。</li>
+                    </ol>
+                    <div class="mt-6 pt-6 border-t border-indigo-200 dark:border-indigo-700 text-center text-xl font-bold text-indigo-800 dark:text-indigo-300">
+                        $$ c = \sqrt{a^2 + b^2} $$
+                    </div>
+                </div>
+
+                <h3 class="sub-section-title">パターンB：斜辺以外の辺を求める（減算のアプローチ）</h3>
+                <p>
+                    一番長い斜辺（$c$）と、もう一方の辺が分かっていて、残りの辺を知りたいときは、最大の面積から一部を切り取るイメージだ。すなわち<strong>「2乗して、引いて、ルートをとる」</strong>。必ず大きい方から小さい方を引くこと。
+                </p>
+                <div class="bg-rose-50 dark:bg-rose-900/20 p-8 rounded-2xl border border-rose-100 dark:border-rose-800 mb-8">
+                    <p class="font-bold text-rose-900 dark:text-rose-200 mb-4 flex items-center gap-2">
+                        <span class="bg-rose-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs">2</span>
+                        計算手順：
+                    </p>
+                    <ol class="list-decimal list-inside space-y-3 text-slate-700 dark:text-slate-300 ml-2">
+                        <li>斜辺 $c$ と、もう一つの辺をそれぞれ2乗する。</li>
+                        <li>斜辺の2乗から、もう一方の2乗を<strong>引き算</strong>する（$c^2 - b^2$）。</li>
+                        <li>その結果の平方根（ルート）をとる。</li>
+                    </ol>
+                    <div class="mt-6 pt-6 border-t border-rose-200 dark:border-rose-700 text-center text-xl font-bold text-rose-800 dark:text-rose-300">
+                        $$ a = \sqrt{c^2 - b^2} $$
+                    </div>
+                </div>
+
+                <!-- Trivia 2 -->
+                <div class="trivia-box">
+                    <span class="trivia-badge">
+                        豆知識：フェルマーの最終定理への架け橋
+                    </span>
+                    <p class="mb-0 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                        三平方の定理 $a^2 + b^2 = c^2$ において、自然数の組 $(a,b,c)$ は無数に存在する（例：3,4,5）。しかし、17世紀の数学者フェルマーは、この指数の「2」を「3以上」に変えたとき、つまり $a^n + b^n = c^n$ ($n \ge 3$) を満たす自然数の組は「一つも存在しない」と書き残した。これが360年間数学者を悩ませた「フェルマーの最終定理」である。ピタゴラスの定理は、数学史上最大の難問の出発点でもあったのだ。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chapter 2: History -->
+        <section class="content-card bg-white border border-slate-100 dark:bg-slate-900 dark:border-slate-800">
+            <h2 class="chapter-title text-slate-900 dark:text-slate-100">第2章：歴史の霧と「ピタゴラス以前」の叡智</h2>
+            <div class="serif-text text-xl leading-relaxed">
+                <p>
+                    現代の教科書では「ピタゴラスの定理」として教えられるが、歴史的事実として、サモス島の賢人ピタゴラス（紀元前570年頃 - 紀元前495年頃）がこの定理の最初の発見者ではないことは、現代の歴史学・考古学においてほぼ確実視されている。ピタゴラス教団がこの定理の数秘術的な重要性を深く認識し、初めて厳密な証明を与えた可能性は高いが、人類によるその「利用」の歴史は、彼が生まれるよりもさらに千年以上前に遡ることができる。
+                </p>
+                
+                <h3 class="sub-section-title">バビロニアの粘土板：プリンプトン322</h3>
+                <p>
+                    1920年代に発見され、コロンビア大学に所蔵されている紀元前1800年頃（ピタゴラスより1000年以上前）の古バビロニアの粘土板「プリンプトン322（Plimpton 322）」。一見するとただの商取引の記録に見えるが、解析の結果、そこには $(119, 120, 169)$ や $(3367, 3456, 4825)$ といった、巨大なピタゴラス数（三辺がすべて整数になる直角三角形の組み合わせ）のリストが60進法で整然と刻まれていることが判明した。これは、当時のバビロニア人が高度な数論的知識を持っていた決定的な証拠である。
+                </p>
+
+                <h3 class="sub-section-title">古代エジプト：縄張り師（ハルペドナプタエ）</h3>
+                <p>
+                    ナイル川は毎年氾濫し、肥沃な土壌をもたらすと同時に、農民たちの土地の境界線をすべて泥の下に消し去った。洪水のたびに境界を正確に引き直す必要があった古代エジプトでは、ファラオに仕える測量技師たちが活躍した。
+                    彼らは「縄張り師（ハルペドナプタエ）」と呼ばれ、等間隔に12個の結び目を作った長いロープを持っていた。このロープで $3:4:5$ の三角形を作ることで、地面に完璧な「直角」を出現させたのである。ピラミッドの底面が驚くほど正確な正方形であるのも、この技術のおかげかもしれない。
+                </p>
+
+                <h3 class="sub-section-title">古代インド：シュルバ・スートラ</h3>
+                <p>
+                    インドにおいても、紀元前800年頃には祭壇を作成するための規定書『シュルバ・スートラ』の中で、直角三角形の性質が記述されていた。彼らは「長方形の対角線は、その両辺（縦と横）が個別に作る領域（正方形）を合わせたものと同じ領域を作る」と表現しており、儀式における祭壇の面積を正確に制御するためにこの定理を用いていた。
+                </p>
+
+                <!-- Trivia 3 -->
+                <div class="trivia-box">
+                    <span class="trivia-badge">
+                        豆知識：無理数の発見と死
+                    </span>
+                    <p class="mb-0 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                        ピタゴラス教団は「万物は数（整数または整数の比）である」という教義を信じていた。しかし、皮肉なことに彼ら自身が崇める三平方の定理を使えば、一辺が1の正方形の対角線は $\sqrt{2}$ となり、整数比で表せない「無理数」が出現してしまう。伝説によれば、教団の一員ヒッパソスがこの不都合な真実を外部に漏らしたため、教団の怒りを買い、船から海に突き落とされて殺されたと言われている。真理の探究には命がけの代償が必要だったのだ。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chapter 3: Proofs -->
+        <section class="content-card bg-white border border-slate-100 dark:bg-slate-900 dark:border-slate-800">
+            <h2 class="chapter-title text-slate-900 dark:text-slate-100">第3章：証明の万華鏡</h2>
+            <div class="serif-text text-xl leading-relaxed">
+                <p>
+                    三平方の定理ほど、多様な方法で証明された定理は他に類を見ない。現在までに確認されている証明法は数百種類に及び、万能の天才レオナルド・ダ・ヴィンチや、第20代アメリカ大統領ジェームズ・ガーフィールド、さらには物理学者アインシュタインまでもが独自の証明を試みている。ここでは代表的なアプローチを紹介する。
+                </p>
+
+                <h3 class="sub-section-title">1. 正方形分割法（パズル的アプローチ）</h3>
+                <p>
+                    最も直感的で視覚的にわかりやすいのは、一辺が $a+b$ の大きな正方形を二通りに分割する方法である。
+                    一つは四隅に４つの直角三角形を配置し、中央に $c^2$ の正方形を作る方法。
+                    もう一つは、長方形を作るように三角形を配置し、$a^2$ と $b^2$ の正方形を作る方法。
+                    外枠の正方形の面積は同じであり、中の4つの三角形の面積も同じである。したがって、残りの余白部分の面積は必然的に等しくならなければならない。すなわち、$c^2 = a^2 + b^2$ である。
+                </p>
+
+                <h3 class="sub-section-title">2. ガーフィールド大統領の台形による証明</h3>
+                <p>
+                    1876年、当時下院議員だったジェームズ・ガーフィールド（後の第20代大統領）は、二つの合同な直角三角形を並べて「台形」を作り、その面積計算から定理を導いた。
+                    台形の面積を「(上底+下底)×高さ÷2」で計算したものと、構成要素である「3つの三角形の面積の和」として計算したものを等式で結ぶと、見事に $a^2 + b^2 = c^2$ が現れる。政治家が数学のオリジナル証明を残すことは極めて稀である。
+                </p>
+                
+                <h3 class="sub-section-title">3. アインシュタインの相似による証明</h3>
+                <p>
+                    若き日のアインシュタインが見出したとされる証明は、面倒な面積計算を行わずに「形（相似）」に注目する極めてエレガントなものである。
+                    直角三角形の直角の頂点から斜辺に垂線を下ろすと、元の三角形と相似な二つの小さな三角形が現れる。「面積比は辺の二乗に比例する」という相似の性質を使えば、$c^2 = a^2 + b^2$ という関係式が一瞬で、魔法のように導かれる。
+                </p>
+
+                <!-- Trivia 4 -->
+                <div class="trivia-box">
+                    <span class="trivia-badge">
+                        豆知識：ピタゴラス数の不思議な性質
+                    </span>
+                    <p class="mb-0 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                        $(3, 4, 5)$ や $(5, 12, 13)$ のような、三辺が整数のピタゴラス数には、面白い法則がある。
+                        <br>1. 少なくとも一つは必ず<strong>3の倍数</strong>である。
+                        <br>2. 少なくとも一つは必ず<strong>4の倍数</strong>である。
+                        <br>3. 少なくとも一つは必ず<strong>5の倍数</strong>である。
+                        <br>試しに $(5, 12, 13)$ を見ると、12は3と4の倍数、5は5の倍数となっており、全て満たしている。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chapter 4: Modern World -->
+        <section class="content-card bg-white border border-slate-100 dark:bg-slate-900 dark:border-slate-800">
+            <h2 class="chapter-title text-slate-900 dark:text-slate-100">第4章：現代社会を動かす隠れたエンジン</h2>
+            <div class="serif-text text-xl leading-relaxed">
+                <p>
+                    古代の遺跡から発掘された定理は、現代において廃れるどころか、デジタル社会の基盤として毎秒数兆回も計算されている。もし明日、三平方の定理が使えなくなれば、私たちの文明は即座に崩壊するだろう。
+                </p>
+
+                <h3 class="sub-section-title">GPSと三次元測位</h3>
+                <p>
+                    私たちがスマートフォンで現在地を知ることができるのは、GPS衛星のおかげである。カーナビやGoogleマップは、上空2万kmにある複数のGPS衛星からの電波の到達時間差を測定し、三平方の定理を三次元空間へ拡張した距離公式 $$ d = \sqrt{(x_2-x_1)^2 + (y_2-y_1)^2 + (z_2-z_1)^2} $$ を用いて位置を特定している。衛星の位置とあなたの位置を結ぶ巨大な直角三角形が、宇宙空間に描かれているのだ。
+                </p>
+
+                <h3 class="sub-section-title">CG技術とゲーム・メタバース</h3>
+                <p>
+                    最新の3Dビデオゲームや映画のVFX、そしてメタバースにおいて、キャラクターの動き、光の反射、影の描写は、すべて空間内のベクトル計算に基づいている。
+                    例えば、FPSゲームで「敵が射程圏内にいるか」を判定する際、プログラムは敵の座標とプレイヤーの座標から三平方の定理を使って距離を瞬時に計算している。画面上のあらゆるリアリティは、この定理の高速演算によって支えられている。
+                </p>
+
+                <h3 class="sub-section-title">建築とA判用紙</h3>
+                <p>
+                    大工は今でも「サシゴ（3:4:5）」を使って家の土台の直角を確認する。また、私たちが日常的に使うコピー用紙「A4」や「B5」の縦横比 $1:\sqrt{2}$ も、直角二等辺三角形から導かれる比率である。この比率のおかげで、紙を半分に折っても元の形と相似になり、資源を無駄にしない効率的な印刷が可能になっている。
+                </p>
+                
+                <!-- Trivia 5 -->
+                <div class="trivia-box">
+                    <span class="trivia-badge">
+                        豆知識：野球と盗塁
+                    </span>
+                    <p class="mb-0 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                        野球のダイヤモンド（内野）は一辺が90フィート（約27.43m）の正方形である。では、キャッチャーが2塁へ盗塁を阻止するためにボールを投げるとき、その距離はどれくらいだろうか？ 三平方の定理を使えば $\sqrt{90^2 + 90^2} \approx 127.3$フィート（約38.8m）とすぐに計算できる。選手たちは無意識のうちに、この距離感を体に染み込ませてプレーしているのだ。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Summary -->
+        <section class="text-center py-24 bg-white rounded-3xl shadow-sm border border-slate-100 dark:bg-slate-900 dark:border-slate-800 relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></div>
+            <div class="h-1 bg-indigo-100 dark:bg-indigo-900/30 w-32 mx-auto mb-12 rounded-full"></div>
+            <h2 class="text-4xl font-black mb-10 text-slate-800 dark:text-slate-100 tracking-tight">永遠の等式</h2>
+            <p class="text-xl text-slate-500 dark:text-slate-400 max-w-3xl mx-auto serif-text leading-loose px-4">
+                文明が滅び、言語が失われたとしても、<br>
+                直角三角形の辺上に描かれた三つの正方形の面積の関係を見れば、<br>
+                知的な生命体はそれが真理であることを理解するだろう。<br>
+                三平方の定理は、人類が発明したものではなく、<br>
+                宇宙開闢の瞬間からそこに存在していた「構造」を発見したものに過ぎない。<br>
+                それは、私たちが星空を見上げるとき、あるいはスマートフォンの画面を見るとき、<br>
+                常に静かに、しかし力強く世界を支え続けている。
+            </p>
+        </section>
+
+    </main>
+
+    <!-- Quiz Panel -->
+    <div id="quizPanel" class="quiz-panel fixed top-0 right-0 h-full w-full md:w-[650px] bg-white shadow-2xl z-50 flex flex-col border-l border-slate-100 dark:bg-slate-900 dark:border-slate-800">
+        <!-- Panel Header -->
+        <div class="p-8 border-b flex justify-between items-center bg-indigo-900 text-white shadow-md dark:bg-slate-950 dark:border-slate-800">
+            <div>
+                <h3 class="text-2xl font-bold flex items-center gap-3">
+                    Practice Problems
+                </h3>
+                <p class="text-xs text-indigo-200 mt-1 uppercase tracking-widest pl-0">Infinite Random Generator</p>
+            </div>
+            <div class="flex gap-2">
+                <button id="generateBtn" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 rounded-lg text-sm font-bold transition-all shadow-lg border border-indigo-400 flex items-center gap-2 dark:bg-indigo-700 dark:hover:bg-indigo-600 dark:border-indigo-600 transform active:scale-95">
+                    <!-- Bootstrap Icon: shuffle -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M0 3.5A.5.5 0 0 1 .5 3H1c2.202 0 3.827 1.24 4.874 2.418.49.552.865 1.102 1.126 1.532.26-.43.636-.98 1.126-1.532C9.173 4.24 10.798 3 13 3v1c-1.798 0-3.173 1.01-4.126 2.082A9.624 9.624 0 0 0 7.556 8a9.624 9.624 0 0 0 1.317 1.918C9.828 10.99 11.204 12 13 12v1c-2.202 0-3.827-1.24-4.874-2.418A10.595 10.595 0 0 1 7 9.05c-.26.43-.636.98-1.126 1.532C4.827 11.76 3.202 13 1 13H.5a.5.5 0 0 1 0-1H1c1.798 0 3.173-1.01 4.126-2.082A9.624 9.624 0 0 0 6.444 8a9.624 9.624 0 0 0-1.317-1.918C4.172 5.01 2.796 4 1 4H.5a.5.5 0 0 1-.5-.5z"/>
+                        <path d="M13 5.466V1.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384l-2.36 1.966a.25.25 0 0 1-.41-.192zm0 9v-3.932a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384l-2.36 1.966a.25.25 0 0 1-.41-.192z"/>
+                    </svg>
+                    問題を生成
+                </button>
+                <button id="closeQuiz" class="p-2.5 hover:bg-indigo-800 rounded-lg transition-colors text-indigo-200 hover:text-white">
+                    <!-- Bootstrap Icon: x-lg -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Quiz Content Area -->
+        <div class="flex-1 overflow-y-auto p-8 bg-slate-50 dark:bg-slate-900 scrollbar-thin">
+            <div id="quizContainer" class="space-y-12">
+                <div class="text-center text-slate-500 dark:text-slate-400 py-32 flex flex-col items-center justify-center h-full">
+                    <div class="bg-indigo-50 dark:bg-indigo-900/20 p-8 rounded-full mb-8 animate-pulse">
+                        <!-- Bootstrap Icon: patch-check-fill -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" class="text-indigo-400" viewBox="0 0 16 16">
+                            <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89-.01-.622-.636zM10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                        </svg>
+                    </div>
+                    <p class="text-2xl mb-3 font-bold text-slate-700 dark:text-slate-200">準備完了</p>
+                    <p class="text-slate-500 dark:text-slate-400 max-w-xs mx-auto">右上の「問題を生成」ボタンを押して、<br>自動生成プログラムによる演習を開始してください。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-slate-900 text-white py-24 text-center dark:bg-slate-950 dark:border-t dark:border-slate-800">
+        <p class="text-slate-500 mb-6 tracking-[0.4em] text-sm uppercase">Mathematical Archive Project</p>
+        <p class="text-sm opacity-40 serif-text italic max-w-md mx-auto leading-relaxed">
+            "All truths are easy to understand once they are discovered; the point is to discover them."
+            <br>– Galileo Galilei
+        </p>
+    </footer>
+
+    <script>
+        // Global variables for the quiz
+        let currentQuestions = [];
+        
+        // --- 1. Math Render Logic ---
+        function renderMath() {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "$", right: "$", display: false}
+                ],
+                throwOnError: false
+            });
+        }
+
+        // --- 2. Problem Generation Algorithm ---
+        function generateTriples() {
+            const triples = [];
+            // Seed Pythogorean Triples using Euclid's formula
+            const seeds = [];
+            for (let m = 2; m < 9; m++) {
+                for (let n = 1; n < m; n++) {
+                    if ((m - n) % 2 === 1 && gcd(m, n) === 1) {
+                        let a = m*m - n*n;
+                        let b = 2*m*n;
+                        let c = m*m + n*n;
+                        seeds.push([a, b, c].sort((x,y) => x-y));
+                    }
+                }
+            }
+            
+            const scaledSeeds = [];
+            seeds.forEach(t => {
+                scaledSeeds.push([...t, 1]); // k=1
+                scaledSeeds.push([t[0]*2, t[1]*2, t[2]*2, 2]); // k=2
+                scaledSeeds.push([t[0]*3, t[1]*3, t[2]*3, 3]); // k=3 (added more variety)
+                if (t[0] === 3 && t[1] === 4) {
+                    scaledSeeds.push([30, 40, 50, 10]);
+                    scaledSeeds.push([0.3, 0.4, 0.5, 0.1]); // Decimal case
+                }
+                if (t[0] === 5 && t[1] === 12) {
+                     scaledSeeds.push([10, 24, 26, 2]);
+                }
+            });
+
+            // Shuffle and pick 10
+            const selected = shuffle(scaledSeeds).slice(0, 10);
+            
+            return selected.map((triple, index) => {
+                const [a, b, c] = triple;
+                const type = Math.random() < 0.4 ? 'hypotenuse' : 'leg';
+                const isWordProblem = Math.random() < 0.4; 
+
+                let questionText = "";
+                let targetVal = 0;
+                let explanation = "";
+
+                if (type === 'hypotenuse') {
+                    // Find c
+                    targetVal = c;
+                    if (isWordProblem) {
+                        const scenarios = [
+                            `南北に ${a}km、東西に ${b}km の長さを持つ長方形の土地があります。この土地の対角線の長さは何kmですか？`,
+                            `高さ ${a}m の垂直な壁に、壁の根元から ${b}m 離れた地点から梯子（はしご）をかけます。梯子がちょうど壁の上端に届くには、梯子の長さは何m必要ですか？`,
+                            `あるゲームのマップ上で、プレイヤーが座標 (0, 0) から (${a}, ${b}) まで移動しました。最短距離（直線距離）はいくつですか？`
+                        ];
+                        // Adjust decimal display for question
+                        questionText = scenarios[Math.floor(Math.random() * scenarios.length)];
+                    } else {
+                        questionText = `直角三角形において、直角を挟む2辺の長さが $a = ${a}$, $b = ${b}$ であるとき、斜辺 $c$ の長さを求めなさい。`;
+                    }
+                    explanation = `<strong>手順：2乗して、足して、ルートをとる</strong><br>
+                    直角を挟む2辺の二乗の和を計算します。<br>
+                    $${a}^2 + ${b}^2 = ${Number(a*a).toFixed(2).replace(/\.00$/,'')} + ${Number(b*b).toFixed(2).replace(/\.00$/,'')} = ${Number(c*c).toFixed(2).replace(/\.00$/,'')}$<br>
+                    $c = \\sqrt{${Number(c*c).toFixed(2).replace(/\.00$/,'')}} = ${c}$ となります。`;
+                } else {
+                    // Find leg
+                    const knownLeg = Math.random() < 0.5 ? b : a;
+                    const unknownLeg = knownLeg === b ? a : b;
+                    targetVal = unknownLeg;
+                    
+                    if (isWordProblem) {
+                        const scenarios = [
+                            `長さ ${c}m の梯子が垂直な壁にかかっています。梯子の足元が壁から ${knownLeg}m 離れているとき、梯子の上端は地面から何mの高さにありますか？`,
+                            `対角線の長さが ${c}cm、一辺の長さが ${knownLeg}cm の長方形のスマートフォンがあります。もう一辺（縦または横）の長さは何cmですか？`
+                        ];
+                        questionText = scenarios[Math.floor(Math.random() * scenarios.length)];
+                    } else {
+                        questionText = `直角三角形の斜辺の長さが $c = ${c}$、他の一辺の長さが $${knownLeg}$ であるとき、残りの一辺の長さを求めなさい。`;
+                    }
+                    explanation = `<strong>手順：2乗して、引いて、ルートをとる</strong><br>
+                    斜辺の二乗から、既知の辺の二乗を引きます。<br>
+                    $${c}^2 - ${knownLeg}^2 = ${Number(c*c).toFixed(2).replace(/\.00$/,'')} - ${Number(knownLeg*knownLeg).toFixed(2).replace(/\.00$/,'')} = ${Number(unknownLeg*unknownLeg).toFixed(2).replace(/\.00$/,'')}$<br>
+                    残りの辺は $\\sqrt{${Number(unknownLeg*unknownLeg).toFixed(2).replace(/\.00$/,'')}} = ${unknownLeg}$ となります。`;
+                }
+
+                let unit = '';
+                if(isWordProblem) {
+                    if(questionText.includes('km')) unit = 'km';
+                    else if(questionText.includes('cm')) unit = 'cm';
+                    else if(questionText.includes('m')) unit = 'm';
+                }
+
+                return {
+                    id: index + 1,
+                    text: questionText,
+                    val: targetVal,
+                    explanation: explanation,
+                    unit: unit
+                };
+            });
+        }
+
+        function gcd(a, b) {
+            return b === 0 ? a : gcd(b, a % b);
+        }
+
+        function shuffle(array) {
+            let currentIndex = array.length, randomIndex;
+            while (currentIndex != 0) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+            }
+            return array;
+        }
+
+        // --- 3. Rendering Quiz HTML ---
+        function generateQuizHTML() {
+            currentQuestions = generateTriples();
+            const container = document.getElementById('quizContainer');
+            container.innerHTML = ''; // Clear
+
+            currentQuestions.forEach(q => {
+                const card = document.createElement('div');
+                card.className = "bg-white p-8 rounded-3xl border border-slate-200 shadow-sm transition-all hover:shadow-md dark:bg-slate-800 dark:border-slate-700 relative overflow-hidden";
+                card.innerHTML = `
+                    <div class="absolute top-0 left-0 w-2 h-full bg-indigo-500"></div>
+                    <div class="flex items-center gap-3 mb-5">
+                        <span class="bg-indigo-100 text-indigo-700 dark:bg-indigo-900 dark:text-indigo-200 font-bold px-4 py-1.5 rounded-full text-sm tracking-wide">Q.${q.id}</span>
+                        ${q.unit ? `<span class="text-xs font-bold text-slate-400 bg-slate-100 dark:bg-slate-700 px-2 py-1 rounded">応用問題</span>` : ''}
+                    </div>
+                    <div class="text-slate-800 dark:text-slate-200 mb-8 text-lg leading-relaxed font-medium serif-text">
+                        ${q.text}
+                    </div>
+                    <div class="flex gap-4 items-center mb-6">
+                        <input type="number" id="q${q.id}-input" class="quiz-input w-full p-4 border-2 border-slate-200 rounded-2xl font-bold text-xl text-slate-700 placeholder-slate-300 dark:bg-slate-900 dark:border-slate-600 dark:text-slate-100" placeholder="答えを入力" step="0.1">
+                        <span class="font-bold text-slate-400 text-xl whitespace-nowrap">${q.unit}</span>
+                    </div>
+                    <button onclick="checkAnswer(${q.id})" class="group w-full bg-slate-800 text-white font-bold py-4 rounded-2xl hover:bg-slate-700 transition-all shadow-lg shadow-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 dark:shadow-none flex items-center justify-center gap-2">
+                        <span>答え合わせ</span>
+                        <!-- Bootstrap Icon: arrow-right-circle -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="opacity-50 group-hover:opacity-100 transition-opacity" viewBox="0 0 16 16">
+                           <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
+                        </svg>
+                    </button>
+                    
+                    <div id="q${q.id}-feedback" class="feedback-box bg-slate-100 dark:bg-slate-900/50"></div>
+                `;
+                container.appendChild(card);
+            });
+
+            // Re-render MathJax/KaTeX for the new content
+            renderMath();
+        }
+
+        // --- 4. Validation Logic ---
+        function checkAnswer(qId) {
+            // qId is 1-based index
+            const data = currentQuestions[qId - 1];
+            const input = document.getElementById(`q${qId}-input`);
+            const feedback = document.getElementById(`q${qId}-feedback`);
+            const userVal = parseFloat(input.value);
+
+            feedback.style.display = 'block';
+            input.classList.remove('correct-answer', 'incorrect-answer');
+
+            if (Math.abs(userVal - data.val) < 0.0001) {
+                // Correct
+                input.classList.add('correct-answer');
+                feedback.innerHTML = `
+                    <div class="text-green-700 dark:text-green-400 font-bold text-lg mb-3 flex items-center gap-2">
+                        <!-- Bootstrap Icon: check-circle-fill -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                        </svg>
+                        正解です！
+                    </div>
+                    <div class="mt-3 bg-white dark:bg-slate-800 p-5 rounded-2xl border border-green-200 dark:border-green-800 text-slate-700 dark:text-slate-300 shadow-sm leading-relaxed">
+                        <strong class="text-green-800 dark:text-green-300 block mb-2 text-sm uppercase tracking-wider">Solution</strong>
+                        ${data.explanation}
+                    </div>
+                `;
+                feedback.className = "feedback-box bg-green-50 border border-green-200 dark:bg-green-900/20 dark:border-green-800";
+            } else {
+                // Incorrect
+                input.classList.add('incorrect-answer');
+                feedback.innerHTML = `
+                    <div class="text-red-700 dark:text-red-400 font-bold text-lg mb-3 flex items-center gap-2">
+                        <!-- Bootstrap Icon: x-circle-fill -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+                        </svg>
+                        不正解です...
+                    </div>
+                    <p class="text-slate-600 dark:text-slate-400 mb-4 text-sm">もう一度計算手順を確認してみましょう。パターンA（足し算）かパターンB（引き算）か、見極めが重要です。</p>
+                    <div class="pt-4 border-t border-red-200 dark:border-red-800">
+                        <button onclick="document.getElementById('reveal-${qId}').classList.remove('hidden')" class="text-red-600 dark:text-red-400 font-bold text-sm hover:text-red-800 dark:hover:text-red-300 underline decoration-2 underline-offset-4">
+                            答えと解説を見る
+                        </button>
+                        <div id="reveal-${qId}" class="hidden mt-4 bg-white dark:bg-slate-800 p-5 rounded-2xl border border-red-200 dark:border-red-800 text-slate-700 dark:text-slate-300 shadow-sm leading-relaxed">
+                             <div class="mb-3 text-lg font-bold text-red-700 dark:text-red-400 border-b border-red-100 dark:border-red-900 pb-2">正解：${data.val} ${data.unit}</div>
+                             <div class="text-sm">${data.explanation}</div>
+                        </div>
+                    </div>
+                `;
+                feedback.className = "feedback-box bg-red-50 border border-red-200 dark:bg-red-900/20 dark:border-red-800";
+            }
+            renderMath(); // Re-render math in feedback
+        }
+
+        // --- 5. Event Listeners ---
+        const quizTrigger = document.getElementById('quizTrigger');
+        const quizPanel = document.getElementById('quizPanel');
+        const closeQuiz = document.getElementById('closeQuiz');
+        const generateBtn = document.getElementById('generateBtn');
+
+        quizTrigger.addEventListener('click', () => {
+            quizPanel.classList.add('active');
+            if (currentQuestions.length === 0) {
+                // Initial prompt is shown, user clicks generate
+            }
+        });
+
+        closeQuiz.addEventListener('click', () => {
+            quizPanel.classList.remove('active');
+        });
+
+        generateBtn.addEventListener('click', () => {
+            generateQuizHTML();
+            const container = document.getElementById('quizContainer');
+            if (container) container.scrollTop = 0;
+        });
+
+        // Initialize KaTeX on load
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMath();
+        });
+    </script>
+</body>
+</html>
