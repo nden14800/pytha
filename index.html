@@ -262,6 +262,12 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
+
+        /* Math formula specific styling */
+        .math-block {
+            overflow-x: auto;
+            padding: 1rem 0;
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 selection:bg-indigo-200 dark:selection:bg-indigo-900">
@@ -381,41 +387,45 @@
                     このサイトの練習問題を解くために必要な、実践的な計算手順を解説する。公式 $a^2 + b^2 = c^2$ は変形することで、求めたい辺が「斜辺（一番長い辺）」か「それ以外の辺」かによって、2つの明確なアルゴリズムに分けることができる。
                 </p>
 
-                <h3 class="sub-section-title">パターンA：斜辺 $c$ を求める（加算のアプローチ）</h3>
-                <p>
-                    直角を挟む2辺（$a$ と $b$）が分かっていて、斜めの一番長い辺（$c$）を知りたいときは、面積を足し合わせるイメージを持つ。すなわち<strong>「2乗して、足して、ルートをとる」</strong>。
-                </p>
+                <!-- Pattern A -->
                 <div class="bg-indigo-50 dark:bg-indigo-900/20 p-8 rounded-2xl border border-indigo-100 dark:border-indigo-800 mb-10">
                     <p class="font-bold text-indigo-900 dark:text-indigo-200 mb-4 flex items-center gap-2">
                         <span class="bg-indigo-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs">1</span>
-                        計算手順：
+                        パターンA：斜辺 $c$ を求める（加算のアプローチ）
                     </p>
-                    <ol class="list-decimal list-inside space-y-3 text-slate-700 dark:text-slate-300 ml-2">
-                        <li>分かっている2つの辺を、それぞれ2乗する（$a^2$ と $b^2$）。</li>
-                        <li>それらを足し算する（$a^2 + b^2$）。これが斜辺の正方形の面積になる。</li>
-                        <li>その面積の平方根（ルート）をとることで、辺の長さに戻す。</li>
-                    </ol>
-                    <div class="mt-6 pt-6 border-t border-indigo-200 dark:border-indigo-700 text-center text-xl font-bold text-indigo-800 dark:text-indigo-300">
-                        $$ c = \sqrt{a^2 + b^2} $$
+                    <div class="pl-4 border-l-2 border-indigo-200 dark:border-indigo-700">
+                        <p class="mb-4 text-sm text-slate-600 dark:text-slate-400">
+                            直角を挟む2辺（$a$ と $b$）が分かっていて、斜めの一番長い辺（$c$）を知りたいときは、面積を足し合わせるイメージを持つ。すなわち<strong>「2乗して、足して、ルートをとる」</strong>。
+                        </p>
+                        <ol class="list-decimal list-inside space-y-2 text-slate-700 dark:text-slate-300 text-sm mb-4">
+                            <li>分かっている2つの辺を、それぞれ2乗する（$a^2$ と $b^2$）。</li>
+                            <li>それらを足し算する（$a^2 + b^2$）。これが斜辺の正方形の面積になる。</li>
+                            <li>その面積の平方根（ルート）をとることで、辺の長さに戻す。</li>
+                        </ol>
+                        <div class="math-block text-xl font-bold text-indigo-800 dark:text-indigo-300 p-3 bg-white dark:bg-slate-800 rounded-lg border border-indigo-100 dark:border-indigo-900 text-center">
+                            $$ c = \sqrt{a^2 + b^2} $$
+                        </div>
                     </div>
                 </div>
 
-                <h3 class="sub-section-title">パターンB：斜辺以外の辺を求める（減算のアプローチ）</h3>
-                <p>
-                    一番長い斜辺（$c$）と、もう一方の辺が分かっていて、残りの辺を知りたいときは、最大の面積から一部を切り取るイメージだ。すなわち<strong>「2乗して、引いて、ルートをとる」</strong>。必ず大きい方から小さい方を引くこと。
-                </p>
+                <!-- Pattern B -->
                 <div class="bg-rose-50 dark:bg-rose-900/20 p-8 rounded-2xl border border-rose-100 dark:border-rose-800 mb-8">
                     <p class="font-bold text-rose-900 dark:text-rose-200 mb-4 flex items-center gap-2">
                         <span class="bg-rose-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs">2</span>
-                        計算手順：
+                        パターンB：斜辺以外の辺を求める（減算のアプローチ）
                     </p>
-                    <ol class="list-decimal list-inside space-y-3 text-slate-700 dark:text-slate-300 ml-2">
-                        <li>斜辺 $c$ と、もう一つの辺をそれぞれ2乗する。</li>
-                        <li>斜辺の2乗から、もう一方の2乗を<strong>引き算</strong>する（$c^2 - b^2$）。</li>
-                        <li>その結果の平方根（ルート）をとる。</li>
-                    </ol>
-                    <div class="mt-6 pt-6 border-t border-rose-200 dark:border-rose-700 text-center text-xl font-bold text-rose-800 dark:text-rose-300">
-                        $$ a = \sqrt{c^2 - b^2} $$
+                    <div class="pl-4 border-l-2 border-rose-200 dark:border-rose-700">
+                        <p class="mb-4 text-sm text-slate-600 dark:text-slate-400">
+                            一番長い斜辺（$c$）と、もう一方の辺が分かっていて、残りの辺を知りたいときは、最大の面積から一部を切り取るイメージだ。すなわち<strong>「2乗して、引いて、ルートをとる」</strong>。必ず大きい方から小さい方を引くこと。
+                        </p>
+                        <ol class="list-decimal list-inside space-y-2 text-slate-700 dark:text-slate-300 text-sm mb-4">
+                            <li>斜辺 $c$ と、もう一つの辺をそれぞれ2乗する。</li>
+                            <li>斜辺の2乗から、もう一方の2乗を<strong>引き算</strong>する（$c^2 - b^2$）。</li>
+                            <li>その結果の平方根（ルート）をとる。</li>
+                        </ol>
+                        <div class="math-block text-xl font-bold text-rose-800 dark:text-rose-300 p-3 bg-white dark:bg-slate-800 rounded-lg border border-rose-100 dark:border-rose-900 text-center">
+                            $$ a = \sqrt{c^2 - b^2} $$
+                        </div>
                     </div>
                 </div>
 
