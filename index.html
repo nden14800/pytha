@@ -297,6 +297,61 @@
             .max-w-7xl { padding-left: 1rem !important; padding-right: 1rem !important; }
         }
     
+    
+        /* 図形要素の完全レスポンシブ化 */
+        .diagram-box {
+            width: 100% !important;
+            overflow-x: hidden !important; /* 横スクロールを禁止し、中身を縮小させる */
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+        }
+        
+        .diagram-box > div {
+            width: 100% !important;
+            max-width: 100% !important;
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+        }
+
+        /* 天秤などの固定幅要素を画面幅に合わせて縮小 */
+        @media (max-width: 768px) {
+            .diagram-box > div {
+                transform: scale(0.85); /* 全体を少し縮小 */
+                transform-origin: center center;
+            }
+            
+            /* 天秤の横棒 (w-80 = 320px) を画面幅に収める */
+            .w-80 {
+                width: 260px !important; /* モバイル用に固定幅を小さく設定 */
+            }
+            
+            /* 左右の皿の配置を内側に寄せる */
+            .left-8 { left: 0px !important; }
+            .right-8 { right: 0px !important; }
+            .md\:left-16 { left: 0px !important; }
+            .md\:right-16 { right: 0px !important; }
+            
+            /* 皿自体の幅も少し小さくする */
+            .w-24 { width: 80px !important; }
+            
+            /* 数式ボックスの文字サイズ調整 */
+            .equation-box {
+                font-size: 1.2rem !important;
+                padding: 1rem !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .diagram-box > div {
+                transform: scale(0.7); /* さらに小さい画面ではもっと縮小 */
+            }
+            .w-80 {
+                width: 220px !important;
+            }
+        }
+    
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 selection:bg-indigo-200 dark:selection:bg-indigo-900">
