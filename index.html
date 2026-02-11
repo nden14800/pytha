@@ -652,19 +652,20 @@
 
         
         
+        
         <!-- Simulation Tool: Interactive Lab -->
         <section class="content-card bg-white border border-slate-100 dark:bg-slate-900 dark:border-slate-800">
-            <h2 class="chapter-title text-slate-900 dark:text-slate-100">Lab：三平方の定理・動的シミュレーター</h2>
+            <h2 class="chapter-title text-slate-900 dark:text-slate-100">Lab：ユークリッドの風車 (The Windmill)</h2>
             <div class="serif-text">
                 <p class="mb-8">
-                    スライダーを動かして、直角三角形の辺の長さと面積の関係をリアルタイムで確認してみよう。$a^2 + b^2 = c^2$ の不変性が視覚的に理解できるはずだ。
+                    スライダーを動かして、直角三角形の各辺に作られる正方形の面積の関係をリアルタイムで確認してみよう。斜辺の正方形の面積（$c^2$）が、他の二辺の正方形の面積の和（$a^2 + b^2$）に等しいことが視覚的に理解できるはずだ。
                 </p>
                 
                 <div class="diagram-box bg-slate-50 dark:bg-slate-950 p-10 rounded-3xl border border-slate-200 dark:border-slate-800">
                     <div class="flex flex-col md:flex-row gap-12 items-center w-full">
                         <!-- Simulation Canvas Area -->
-                        <div class="relative bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-inner border border-slate-100 dark:border-slate-800 flex items-center justify-center" style="width: 400px; height: 400px; overflow: hidden;">
-                            <canvas id="pythaSimCanvas" width="400" height="400"></canvas>
+                        <div class="relative bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-inner border border-slate-100 dark:border-slate-800 flex items-center justify-center" style="width: 450px; height: 450px; overflow: hidden;">
+                            <canvas id="pythaSimCanvas" width="450" height="450"></canvas>
                         </div>
                         
                         <!-- Controls Area -->
@@ -674,14 +675,14 @@
                                     <span>底辺 (a)</span>
                                     <span id="valA" class="text-indigo-600 dark:text-indigo-400">80</span>
                                 </label>
-                                <input type="range" id="sliderA" min="30" max="150" value="80" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
+                                <input type="range" id="sliderA" min="40" max="140" value="80" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
                             </div>
                             <div>
                                 <label class="flex justify-between text-sm font-bold text-slate-500 mb-3">
                                     <span>高さ (b)</span>
-                                    <span id="valB" class="text-rose-600 dark:text-rose-400">110</span>
+                                    <span id="valB" class="text-rose-600 dark:text-rose-400">100</span>
                                 </label>
-                                <input type="range" id="sliderB" min="30" max="150" value="110" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-rose-600">
+                                <input type="range" id="sliderB" min="40" max="140" value="100" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-rose-600">
                             </div>
                             
                             <div class="pt-6 border-t border-slate-200 dark:border-slate-800">
@@ -692,16 +693,16 @@
                                     </div>
                                     <div class="p-3 bg-rose-50 dark:bg-rose-900/20 rounded-xl">
                                         <p class="text-[10px] uppercase font-bold text-rose-400 mb-1">AREA B²</p>
-                                        <p id="resB2" class="text-lg font-black text-rose-700 dark:text-rose-300">12100</p>
+                                        <p id="resB2" class="text-lg font-black text-rose-700 dark:text-rose-300">10000</p>
                                     </div>
                                     <div class="p-3 bg-violet-50 dark:bg-violet-900/20 rounded-xl">
                                         <p class="text-[10px] uppercase font-bold text-violet-400 mb-1">AREA C²</p>
-                                        <p id="resC2" class="text-lg font-black text-violet-700 dark:text-violet-300">18500</p>
+                                        <p id="resC2" class="text-lg font-black text-violet-700 dark:text-violet-300">16400</p>
                                     </div>
                                 </div>
                                 <div class="mt-6 p-4 bg-slate-900 text-white rounded-2xl text-center">
                                     <p class="text-xs opacity-50 mb-1">計算結果 (斜辺 c)</p>
-                                    <p id="resC" class="text-2xl font-black tracking-tighter">136.01</p>
+                                    <p id="resC" class="text-2xl font-black tracking-tighter">128.06</p>
                                 </div>
                             </div>
                         </div>
@@ -733,33 +734,38 @@
                     ctx.clearRect(0, 0, canvas.width, canvas.height);
                     
                     // Center the drawing
-                    const centerX = 150;
-                    const centerY = 250;
+                    const centerX = 225;
+                    const centerY = 225;
                     
-                    // Draw Square a (Bottom)
+                    // Triangle vertices
+                    const v1 = { x: centerX - a/2, y: centerY + b/2 }; // Left bottom
+                    const v2 = { x: centerX + a/2, y: centerY + b/2 }; // Right bottom (Right angle)
+                    const v3 = { x: centerX + a/2, y: centerY - b/2 }; // Right top
+                    
+                    // Draw Square a (Bottom side)
                     ctx.globalAlpha = 0.3;
                     ctx.fillStyle = '#6366f1';
-                    ctx.fillRect(centerX, centerY, a, a);
+                    ctx.fillRect(v1.x, v1.y, a, a);
                     
-                    // Draw Square b (Left)
+                    // Draw Square b (Right side)
                     ctx.fillStyle = '#f43f5e';
-                    ctx.fillRect(centerX - b, centerY - b, b, b);
+                    ctx.fillRect(v2.x, v3.y, b, b);
                     
-                    // Draw Square c (Hypotenuse)
+                    // Draw Square c (Hypotenuse side)
                     ctx.save();
-                    ctx.translate(centerX, centerY - b);
+                    ctx.translate(v1.x, v1.y);
                     const angle = Math.atan2(b, a);
                     ctx.rotate(-angle);
                     ctx.fillStyle = '#8b5cf6';
-                    ctx.fillRect(0, -c, c, c);
+                    ctx.fillRect(0, -c, c, -c); // Draw square outside the triangle
                     ctx.restore();
                     
                     // Draw Triangle
                     ctx.globalAlpha = 1.0;
                     ctx.beginPath();
-                    ctx.moveTo(centerX, centerY);
-                    ctx.lineTo(centerX + a, centerY);
-                    ctx.lineTo(centerX, centerY - b);
+                    ctx.moveTo(v1.x, v1.y);
+                    ctx.lineTo(v2.x, v2.y);
+                    ctx.lineTo(v3.x, v3.y);
                     ctx.closePath();
                     ctx.fillStyle = '#1e293b';
                     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -768,11 +774,18 @@
                     ctx.fill();
                     
                     // Labels
-                    ctx.font = 'bold 12px Inter';
-                    ctx.fillStyle = '#64748b';
-                    ctx.fillText('a', centerX + a/2 - 5, centerY + 15);
-                    ctx.fillText('b', centerX - 15, centerY - b/2 + 5);
-                    ctx.fillText('c', centerX + a/2 + 5, centerY - b/2 - 5);
+                    ctx.font = 'bold 14px Inter';
+                    ctx.fillStyle = '#ffffff';
+                    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ctx.fillStyle = '#000000';
+                    ctx.fillText('a²', v1.x + a/2 - 10, v1.y + a/2 + 5);
+                    ctx.fillText('b²', v2.x + b/2 - 10, v3.y + b/2 + 5);
+                    
+                    // Label for c^2 requires rotation
+                    ctx.save();
+                    ctx.translate(v1.x, v1.y);
+                    ctx.rotate(-angle);
+                    ctx.fillText('c²', c/2 - 10, -c/2 + 5);
+                    ctx.restore();
                 }
                 
                 sliderA.addEventListener('input', draw);
