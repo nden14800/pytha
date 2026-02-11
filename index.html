@@ -650,7 +650,124 @@
             </div>
         </section>
 
-        <!-- Summary -->
+        
+        <!-- Simulation Tool: Interactive Lab -->
+        <section class="content-card bg-white border border-slate-100 dark:bg-slate-900 dark:border-slate-800">
+            <h2 class="chapter-title text-slate-900 dark:text-slate-100">Lab：三平方の定理・動的シミュレーター</h2>
+            <div class="serif-text">
+                <p class="mb-8">
+                    スライダーを動かして、直角三角形の辺の長さと面積の関係をリアルタイムで確認してみよう。$a^2 + b^2 = c^2$ の不変性が視覚的に理解できるはずだ。
+                </p>
+                
+                <div class="diagram-box bg-slate-50 dark:bg-slate-950 p-10 rounded-3xl border border-slate-200 dark:border-slate-800">
+                    <div class="flex flex-col md:flex-row gap-12 items-center w-full">
+                        <!-- Simulation Canvas Area -->
+                        <div class="relative bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-inner border border-slate-100 dark:border-slate-800" style="width: 400px; height: 400px;">
+                            <canvas id="pythaSimCanvas" width="350" height="350"></canvas>
+                        </div>
+                        
+                        <!-- Controls Area -->
+                        <div class="flex-1 space-y-8 w-full">
+                            <div>
+                                <label class="flex justify-between text-sm font-bold text-slate-500 mb-3">
+                                    <span>底辺 (a)</span>
+                                    <span id="valA" class="text-indigo-600 dark:text-indigo-400">30</span>
+                                </label>
+                                <input type="range" id="sliderA" min="10" max="150" value="80" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
+                            </div>
+                            <div>
+                                <label class="flex justify-between text-sm font-bold text-slate-500 mb-3">
+                                    <span>高さ (b)</span>
+                                    <span id="valB" class="text-rose-600 dark:text-rose-400">40</span>
+                                </label>
+                                <input type="range" id="sliderB" min="10" max="150" value="110" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-rose-600">
+                            </div>
+                            
+                            <div class="pt-6 border-t border-slate-200 dark:border-slate-800">
+                                <div class="grid grid-cols-3 gap-4 text-center">
+                                    <div class="p-3 bg-indigo-50 dark:bg-indigo-900/20 rounded-xl">
+                                        <p class="text-[10px] uppercase font-bold text-indigo-400 mb-1">Area a²</p>
+                                        <p id="resA2" class="text-lg font-black text-indigo-700 dark:text-indigo-300">900</p>
+                                    </div>
+                                    <div class="p-3 bg-rose-50 dark:bg-rose-900/20 rounded-xl">
+                                        <p class="text-[10px] uppercase font-bold text-rose-400 mb-1">Area b²</p>
+                                        <p id="resB2" class="text-lg font-black text-rose-700 dark:text-rose-300">1600</p>
+                                    </div>
+                                    <div class="p-3 bg-violet-50 dark:bg-violet-900/20 rounded-xl">
+                                        <p class="text-[10px] uppercase font-bold text-violet-400 mb-1">Area c²</p>
+                                        <p id="resC2" class="text-lg font-black text-violet-700 dark:text-violet-300">2500</p>
+                                    </div>
+                                </div>
+                                <div class="mt-6 p-4 bg-slate-900 text-white rounded-2xl text-center">
+                                    <p class="text-xs opacity-50 mb-1">計算結果 (斜辺 c)</p>
+                                    <p id="resC" class="text-2xl font-black tracking-tighter">50.00</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <script>
+            function initPythaSim() {
+                const canvas = document.getElementById('pythaSimCanvas');
+                if (!canvas) return;
+                const ctx = canvas.getContext('2d');
+                const sliderA = document.getElementById('sliderA');
+                const sliderB = document.getElementById('sliderB');
+                
+                function draw() {
+                    const a = parseInt(sliderA.value);
+                    const b = parseInt(sliderB.value);
+                    const c = Math.sqrt(a*a + b*b);
+                    
+                    document.getElementById('valA').textContent = a;
+                    document.getElementById('valB').textContent = b;
+                    document.getElementById('resA2').textContent = (a*a).toFixed(0);
+                    document.getElementById('resB2').textContent = (b*b).toFixed(0);
+                    document.getElementById('resC2').textContent = (c*c).toFixed(0);
+                    document.getElementById('resC').textContent = c.toFixed(2);
+                    
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    
+                    const offsetX = 50;
+                    const offsetY = 250;
+                    
+                    // Draw Squares
+                    ctx.globalAlpha = 0.2;
+                    ctx.fillStyle = '#6366f1'; // a^2
+                    ctx.fillRect(offsetX, offsetY, a, a);
+                    ctx.fillStyle = '#f43f5e'; // b^2
+                    ctx.fillRect(offsetX - b, offsetY - b, b, b);
+                    
+                    // Draw Triangle
+                    ctx.globalAlpha = 1.0;
+                    ctx.beginPath();
+                    ctx.moveTo(offsetX, offsetY);
+                    ctx.lineTo(offsetX + a, offsetY);
+                    ctx.lineTo(offsetX, offsetY - b);
+                    ctx.closePath();
+                    ctx.fillStyle = '#1e293b';
+                    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                        ctx.fillStyle = '#f1f5f9';
+                    }
+                    ctx.fill();
+                    
+                    // Labels
+                    ctx.font = 'bold 14px Inter';
+                    ctx.fillText('a', offsetX + a/2, offsetY + 20);
+                    ctx.fillText('b', offsetX - 20, offsetY - b/2);
+                    ctx.fillText('c', offsetX + a/2 + 5, offsetY - b/2 - 5);
+                }
+                
+                sliderA.addEventListener('input', draw);
+                sliderB.addEventListener('input', draw);
+                draw();
+            }
+            document.addEventListener('DOMContentLoaded', initPythaSim);
+        </script>
+<!-- Summary -->
         <section class="text-center py-24 bg-white rounded-3xl shadow-sm border border-slate-100 dark:bg-slate-900 dark:border-slate-800 relative overflow-hidden">
             <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></div>
             <div class="h-1 bg-indigo-100 dark:bg-indigo-900/30 w-32 mx-auto mb-12 rounded-full"></div>
