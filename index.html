@@ -152,6 +152,8 @@
         }
 
         .diagram-box {
+            width: 100%;
+            overflow-x: auto;
             border-radius: 2rem;
             padding: 4rem;
             margin: 5rem 0;
@@ -165,6 +167,8 @@
         
         @media (prefers-color-scheme: dark) {
             .diagram-box {
+            width: 100%;
+            overflow-x: auto;
                 background-color: #0f172a;
                 border: 1px solid #1e293b;
             }
@@ -271,12 +275,22 @@
         }
     
         @media (max-width: 768px) {
+            .diagram-box svg { max-width: 100% !important; height: auto !important; }
+            .diagram-box > div { transform: scale(0.8); transform-origin: center top; width: 100% !important; }
+            /* 天秤などの固定幅要素をモバイルで縮小 */
+            .w-80 { max-width: 90vw !important; }
+            .max-w-lg { max-width: 100% !important; }
+            /* 数式ボックスのフォントサイズをさらに調整 */
+            .equation-box { font-size: 1.25rem !important; overflow-x: auto !important; }
+    
             .content-card { padding: 2rem 1.5rem !important; margin-bottom: 3rem !important; }
             .equation-box { font-size: 1.5rem !important; padding: 1.5rem !important; margin: 2rem 0 !important; }
             .chapter-title { font-size: 1.75rem !important; margin-bottom: 2rem !important; }
             .sub-section-title { font-size: 1.3rem !important; margin-top: 3rem !important; }
             p { font-size: 1rem !important; line-height: 1.8 !important; margin-bottom: 1.5rem !important; }
-            .diagram-box { padding: 2rem 1rem !important; margin: 3rem 0 !important; }
+            .diagram-box {
+            width: 100%;
+            overflow-x: auto; padding: 2rem 1rem !important; margin: 3rem 0 !important; }
             .trivia-box { padding: 2rem 1.5rem !important; margin: 3rem 0 !important; }
             .quiz-panel { width: 100% !important; }
             .max-w-4xl { padding-left: 1rem !important; padding-right: 1rem !important; }
