@@ -653,63 +653,6 @@
         
         
         
-        <!-- Simulation Tool: Interactive Lab -->
-        <section class="content-card bg-white border border-slate-100 dark:bg-slate-900 dark:border-slate-800">
-            <h2 class="chapter-title text-slate-900 dark:text-slate-100">Lab：ユークリッドの風車 (The Windmill)</h2>
-            <div class="serif-text">
-                <p class="mb-8">
-                    スライダーを動かして、直角三角形の各辺に作られる正方形の面積の関係をリアルタイムで確認してみよう。斜辺の正方形の面積（$c^2$）が、他の二辺の正方形の面積の和（$a^2 + b^2$）に等しいことが視覚的に理解できるはずだ。
-                </p>
-                
-                <div class="diagram-box bg-slate-50 dark:bg-slate-950 p-10 rounded-3xl border border-slate-200 dark:border-slate-800">
-                    <div class="flex flex-col md:flex-row gap-12 items-center w-full">
-                        <!-- Simulation Canvas Area -->
-                        <div class="relative bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-inner border border-slate-100 dark:border-slate-800 flex items-center justify-center" style="width: 450px; height: 450px; overflow: hidden;">
-                            <canvas id="pythaSimCanvas" width="450" height="450"></canvas>
-                        </div>
-                        
-                        <!-- Controls Area -->
-                        <div class="flex-1 space-y-8 w-full">
-                            <div>
-                                <label class="flex justify-between text-sm font-bold text-slate-500 mb-3">
-                                    <span>底辺 (a)</span>
-                                    <span id="valA" class="text-indigo-600 dark:text-indigo-400">80</span>
-                                </label>
-                                <input type="range" id="sliderA" min="40" max="140" value="80" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
-                            </div>
-                            <div>
-                                <label class="flex justify-between text-sm font-bold text-slate-500 mb-3">
-                                    <span>高さ (b)</span>
-                                    <span id="valB" class="text-rose-600 dark:text-rose-400">100</span>
-                                </label>
-                                <input type="range" id="sliderB" min="40" max="140" value="100" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-rose-600">
-                            </div>
-                            
-                            <div class="pt-6 border-t border-slate-200 dark:border-slate-800">
-                                <div class="grid grid-cols-3 gap-4 text-center">
-                                    <div class="p-3 bg-indigo-50 dark:bg-indigo-900/20 rounded-xl">
-                                        <p class="text-[10px] uppercase font-bold text-indigo-400 mb-1">AREA A²</p>
-                                        <p id="resA2" class="text-lg font-black text-indigo-700 dark:text-indigo-300">6400</p>
-                                    </div>
-                                    <div class="p-3 bg-rose-50 dark:bg-rose-900/20 rounded-xl">
-                                        <p class="text-[10px] uppercase font-bold text-rose-400 mb-1">AREA B²</p>
-                                        <p id="resB2" class="text-lg font-black text-rose-700 dark:text-rose-300">10000</p>
-                                    </div>
-                                    <div class="p-3 bg-violet-50 dark:bg-violet-900/20 rounded-xl">
-                                        <p class="text-[10px] uppercase font-bold text-violet-400 mb-1">AREA C²</p>
-                                        <p id="resC2" class="text-lg font-black text-violet-700 dark:text-violet-300">16400</p>
-                                    </div>
-                                </div>
-                                <div class="mt-6 p-4 bg-slate-900 text-white rounded-2xl text-center">
-                                    <p class="text-xs opacity-50 mb-1">計算結果 (斜辺 c)</p>
-                                    <p id="resC" class="text-2xl font-black tracking-tighter">128.06</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
 
         <script>
             function initPythaSim() {
